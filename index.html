@@ -378,11 +378,10 @@
       try {
         const res = await fetch(GAS_ENDPOINT, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload),
+          redirect: 'follow'
         });
-
-        if (!res.ok) throw new Error('Server error');
 
         // 成功画面
         document.getElementById('form-screen').style.display   = 'none';

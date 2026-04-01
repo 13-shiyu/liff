@@ -65,6 +65,11 @@
       font-size: 12px;
       margin-left: 4px;
     }
+    .form-group label .optional {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: 4px;
+    }
 
     .form-group input[type="text"],
     .form-group select {
@@ -253,12 +258,12 @@
           <div class="error-msg" id="graduationYear-error">卒業年度を選択してください</div>
         </div>
 
-        <!-- ⑥ 招待コード -->
+        <!-- ⑥ 招待コード（任意） -->
         <div class="form-group">
-          <label>招待コード<span style="font-size:12px;color:#6b7280;margin-left:4px">任意</span></label>
-          <input type="text" id="inviteCode" placeholder="3桁のコード" maxlength="3" required>
-          <div class="error-msg" id="inviteCode-error">3桁の招待コードを入力してください</div>
-          <div class="hint">紹介者から受け取った3桁のコードを入力</div>
+          <label>招待コード<span class="optional">任意</span></label>
+          <input type="text" id="inviteCode" placeholder="3桁のコード" maxlength="3">
+          <div class="error-msg" id="inviteCode-error">招待コードは3桁で入力してください</div>
+          <div class="hint">紹介者から受け取った3桁のコードがあれば入力</div>
         </div>
 
         <button type="submit" class="submit-btn" id="submitBtn">登録する</button>
@@ -275,17 +280,15 @@
     <button class="close-btn" onclick="closeLiff()">閉じる</button>
   </div>
 
-  <!-- ============================================================
-       LIFF SDK
-       ============================================================ -->
+  <!-- LIFF SDK -->
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
   <script>
     // =====================================================
     // ★ 設定値（デプロイ時に書き換え）
     // =====================================================
-    const LIFF_ID       = '2009659268-axm2AcTW';           // LIFF IDを設定
-    const GAS_ENDPOINT  = 'https://script.google.com/macros/s/AKfycby7NDE-D3fDBx0DMF5P9y_-dX3RCUpzszvWNQpHiOBd003wsfVmLcIL3KPX2gQm_IOCTQ/exec';   // GAS WebアプリURLを設定
+    const LIFF_ID       = '2009659268-axm2AcTW';
+    const GAS_ENDPOINT  = 'https://script.google.com/macros/s/AKfycby-ltMKNmIlqVdc_JAsDr2EPBGmFIITK1yANX-hTNi8-FAtrsOlLywysh1xFmbZ0xonVg/exec';
 
     // =====================================================
     // LIFF 初期化
@@ -330,23 +333,23 @@
     }
 
     function validateAll() {
-      const name     = document.getElementById('fullName').value.trim();
-      const kana     = document.getElementById('fullNameKana').value.trim();
-      const uni      = document.getElementById('university').value.trim();
-      const fac      = document.getElementById('faculty').value.trim();
-      const year     = document.getElementById('graduationYear').value;
-      const code     = document.getElementById('inviteCode').value.trim();
+      const name = document.getElementById('fullName').value.trim();
+      const kana = document.getElementById('fullNameKana').value.trim();
+      const uni  = document.getElementById('university').value.trim();
+      const fac  = document.getElementById('faculty').value.trim();
+      const year = document.getElementById('graduationYear').value;
+      const code = document.getElementById('inviteCode').value.trim();
 
       const kanaRegex = /^[ァ-ヶー\s　]+$/;
       const codeRegex = /^[A-Za-z0-9]{3}$/;
 
       let ok = true;
-      ok = validateField('fullName',       name.length > 0)           && ok;
-      ok = validateField('fullNameKana',   kanaRegex.test(kana))      && ok;
-      ok = validateField('university',     uni.length > 0)            && ok;
-      ok = validateField('faculty',        fac.length > 0)            && ok;
-      ok = validateField('graduationYear', year !== '')                && ok;
-      ok = validateField('inviteCode', code === '' || codeRegex.test(code)) && ok;
+      ok = validateField('fullName',       name.length > 0)                    && ok;
+      ok = validateField('fullNameKana',   kanaRegex.test(kana))               && ok;
+      ok = validateField('university',     uni.length > 0)                     && ok;
+      ok = validateField('faculty',        fac.length > 0)                     && ok;
+      ok = validateField('graduationYear', year !== '')                         && ok;
+      ok = validateField('inviteCode',     code === '' || codeRegex.test(code)) && ok;
 
       return ok;
     }
